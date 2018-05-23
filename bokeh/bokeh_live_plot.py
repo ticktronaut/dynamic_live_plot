@@ -83,7 +83,6 @@ class BokehLivePlot(Thread):
                 # create line object for corresponding figure
                 plot=fig[fig_name].line(source=cds[fig_name], x='x', y=data_name, line_width=2, alpha=1, color=Category20[20][randint(0,19)], muted_alpha=.2, legend=legend_name, name=glyph_name)
 
-        # FixMe: implement and test del line
         def del_line(line_name, fig_name):
             print('del line ', line_name, ' in plot ', fig_name)
             data_name= str(line_name)
@@ -105,9 +104,9 @@ class BokehLivePlot(Thread):
                 # create plot
                 TOOLS="pan,wheel_zoom,box_zoom,reset, save, tap, hover"
                 #TOOLS=""
-                plt_col=doc.get_model_by_name('plt_ui_col').children
                 fig[fig_name]=figure(plot_width=900, plot_height=280, tools=TOOLS, toolbar_location='right', logo=None, title=(fig_name), name=str(fig_name))
                 cds[fig_name]=ColumnDataSource(data=dict(x=np.array([])), name=(fig_name+'_cds'))
+                plt_col=doc.get_model_by_name('plt_ui_col').children
                 plt_col.append( fig[fig_name] )
 
             else:
@@ -150,8 +149,6 @@ class BokehLivePlot(Thread):
                 # update the document from callback
                 doc.add_next_tick_callback(partial(update, data=self.d))
                 self.t_msg_new_d.release()
-
-        
         
         thread = Thread(target=blocking_task)
         thread.start()

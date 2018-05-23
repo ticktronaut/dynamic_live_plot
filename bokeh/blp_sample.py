@@ -19,11 +19,11 @@ from threading import Thread
 def rand_data():
     return dict( temperature=dict( t001=np.array([uniform(-1,1)]), t004=np.array([uniform(-1,1)]) ) )
 def rand_data1():
-    return dict( temperature=dict( t001=np.array([uniform(-1,1)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(3,2)]), p004=np.array([uniform(-4,-1)]) ) )
+    return dict( temperature=dict( t001=np.array([uniform(-1,1)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(3,2)]), p004=np.array([uniform(-4,-1)]), p008=np.array([uniform(5,5.5)]) ) )
 def rand_data2():
-    return dict( temperature=dict( t001=np.array([uniform(-1,1)]), t004=np.array([uniform(-1,1)]) ),  pressure=dict( p001=np.array([uniform(-1,1)])), humidity=dict( h001=np.array([uniform(-1,1)]), h004=np.array([uniform(-1,1)]) ) )
+    return dict( temperature=dict( t001=np.array([uniform(-1,1)]), t004=np.array([uniform(-1,1)]) ),  pressure=dict( p001=np.array([uniform(-1,1)]), p008=np.array([uniform(5,5.5)])), humidity=dict( h001=np.array([uniform(-1,1)]), h004=np.array([uniform(-1,1)]) ) )
 def rand_data3():
-    return dict( temperature=dict( t001=np.array([uniform(-4,23)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(4,3)]) ), humidity=dict( h001=np.array([uniform(-1,1)]), h002=np.array([uniform(-1,1)]), h004=np.array([uniform(-2,4)]) ) )
+    return dict( temperature=dict( t001=np.array([uniform(-4,23)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(4,3)]),  p008=np.array([uniform(5,5.5)]) ), humidity=dict( h001=np.array([uniform(-1,1)]), h002=np.array([uniform(-1,1)]), h004=np.array([uniform(-2,4)]) ) )
 def rand_data4():
     return dict( temperature=dict( t001=np.array([uniform(-4,23)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(4,3)]), p004=np.array([uniform(1,2)]) ), humidity=dict( h001=np.array([uniform(-1,1)]), h002=np.array([uniform(-1,1)]), h004=np.array([uniform(-2,4)]) ) )
 
