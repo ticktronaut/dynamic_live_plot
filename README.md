@@ -5,7 +5,7 @@ Its usage is extremely simplyfied. By calling just one method, plots can be upda
 
 ![alt tag](./showcase.gif)
 
-The software depends on Python Bokeh. It strongly utilizes features of Bokeh like its server or "next tick callbacks". Its main class basically is an abstraction of [embedding Bokeh Server as a library](https://bokeh.pydata.org/en/latest/docs/user_guide/server.html#embedding-bokeh-server-as-a-library) (also see the [standalone_embed.py](https://github.com/bokeh/bokeh/tree/0.12.16/examples/howto/server_embed/standalone_embed.py)). To make the update calls non-blocking it extends threading.Thread.
+The software depends on Python Bokeh. It strongly utilizes features of Bokeh like its server or "next tick callbacks". Its main class basically is an abstraction of [embedding Bokeh Server as a library](https://bokeh.pydata.org/en/latest/docs/user_guide/server.html#embedding-bokeh-server-as-a-library) (also see the [standalone_embed.py](https://github.com/bokeh/bokeh/tree/0.12.16/examples/howto/server_embed/standalone_embed.py)). To make the update calls non-blocking it extends *threading.Thread*.
 
 ## Usage
 The only class method is *push_d()*. Its purpose is to tell *BokehLivePlot* which data to plot. It accepts a nested dictionary as an argument:
