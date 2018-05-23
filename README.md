@@ -11,6 +11,7 @@ The software depends on Python Bokeh. It strongly utilizes features of Bokeh lik
 The only class method is *push_d()*. Its purpose is to tell *BokehLivePlot* which data to plot. It accepts a nested dictionary as an argument:
 * Outer dictionary: Figures to plot
 * Inner dictionary: Lines of data, represented by numpy arrays (which is recommended by Python Bokeh)
+
 Following example shows the usage of the class BokehLivePlot.
 ```python
 # import bokeh_live_plot
