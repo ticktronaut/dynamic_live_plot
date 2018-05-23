@@ -1,5 +1,5 @@
 # dynamic_live_plot
-*Dynamic Live Charts* is a simple way to plot data live and nonblocking. It is capable of dynamically adding and removing plots and graph glyphs during runtime. This is especially useful, if you do not know, which data will occour during runtime. This might be the case in a sensornetwork, where nodes may emerge, or disappear.
+*Dynamic Live Plot* is a simple way to plot data live and nonblocking. It is capable of dynamically adding and removing plots and graph glyphs during runtime. This is especially useful, if you do not know, which data will occour during runtime. This might be the case in a sensornetwork, where nodes may emerge, or disappear.
 
 Its usage is extremely simplyfied. By calling just one method, plots can be updated by new data. Inbetween these updates of the plots, blocking computation can be done without stopping the live plot from working.
 
