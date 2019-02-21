@@ -104,7 +104,8 @@ class BokehLivePlot(Thread):
                 # create plot
                 TOOLS="pan,wheel_zoom,box_zoom,reset, save, tap, hover"
                 #TOOLS=""
-                fig[fig_name]=figure(plot_width=900, plot_height=280, tools=TOOLS, toolbar_location='right', logo=None, title=(fig_name), name=str(fig_name))
+                #fig[fig_name]=figure(plot_width=900, plot_height=280, tools=TOOLS, toolbar_location='right', logo=None, title=(fig_name), name=str(fig_name))
+                fig[fig_name]=figure(plot_width=900, plot_height=280, toolbar_location='right', title=(fig_name), name=str(fig_name))
                 cds[fig_name]=ColumnDataSource(data=dict(x=np.array([])), name=(fig_name+'_cds'))
                 plt_col=doc.get_model_by_name('plt_ui_col').children
                 plt_col.append( fig[fig_name] )
