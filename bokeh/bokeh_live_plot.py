@@ -154,7 +154,7 @@ class BokehLivePlot(Thread):
         thread = Thread(target=blocking_task)
         thread.start()
 
-    def push_d(self, data):
+    def push_data(self, data):
         # data
         # producer
         self.t_msg_new_d.acquire()

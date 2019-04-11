@@ -34,23 +34,23 @@ delta_t=.2
 
 # test dynamic_live_plot
 for i in range(10):
-    myplot.push_d( rand_data() )
+    myplot.push_data( rand_data() )
     time.sleep(delta_t)
 
 for i in range(20):
-    myplot.push_d( rand_data1() )
+    myplot.push_data( rand_data1() )
     time.sleep(delta_t)
 
 for i in range(10):
-    myplot.push_d( rand_data2() )
+    myplot.push_data( rand_data2() )
     time.sleep(delta_t)
 
 for i in range(30):
-    myplot.push_d( rand_data3() )
+    myplot.push_data( rand_data3() )
     time.sleep(delta_t)
 
 while True:
-    myplot.push_d( rand_data4() )
+    myplot.push_data( rand_data4() )
     time.sleep(delta_t)
 
 # this point will never be reached
