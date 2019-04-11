@@ -7,7 +7,6 @@ from random import choice, shuffle, uniform
 #from data_factory import PlotFactory
 class DataFactory():
     def __init__(self, n=1):
-        print("do it, big time!")
         self.plt_max=5
         self.nmb_plt=None
         if n < self.plt_max:
@@ -42,7 +41,6 @@ class DataFactory():
 #            print("Maximum number of plots available is", self._max_plts)
 
     def produce_data(self,x):
-        print("return dictionary with data")
         data = dict()
         for i in range(self.nmb_plt):
             name=self.name[i]

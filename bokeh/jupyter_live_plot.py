@@ -6,8 +6,11 @@ from bokeh.plotting import figure
 from bokeh.palettes import Category20
 from bokeh.io import output_notebook, show, push_notebook
 
+from threading import Thread
+
 import numpy as np
 from random import random, randint
+import time
 
 class JupyterLivePlot():
     output_notebook()
@@ -19,7 +22,8 @@ class JupyterLivePlot():
         self.width_d = 200
         self.width_drop = 50
         
-        # x
+        # x-axis (optionally provided here)
+        # can also be delivered from outside
         self._x=0.0
         self.d_x=.1
         
@@ -50,6 +54,13 @@ class JupyterLivePlot():
         #my_figure.renderers.remove(del_line)
         #test_data.remove('dummy_line')
         #push_notebook(handle=handle)
+        
+        # thread for periodic callback function 
+        # for non-blocking operations 
+        self.th = None
+        self.stop_threads = False
+        self.periodic_callback = None
+        self.period_milliseconds = None
         
     def contains_line(self, line_name):
         #return True
@@ -99,8 +110,38 @@ class JupyterLivePlot():
         self.fig.renderers.remove(del_line); #self.fig.legend[0].items.pop(del_legend_idx) #FixMe which should i delete
         push_notebook(handle=self.handle)
 
+    def add_periodic_callback(self, callback, period_milliseconds):
+        if not self.th is None:
+            print("Remove existing callback, before creating a new one.")
+            # remove existing periodic callback
+            self.remove_periodic_callback()
+
+        self.periodic_callback = callback
+        self.period_milliseconds = period_milliseconds
         
-    def push_d(self, data):
+        self.stop_threads=False
+        self.th = Thread(target=self.blocking_task, args=(id, lambda: self.stop_threads))
+        self.th.start()
+        
+    def remove_periodic_callback(self):
+        print("stop thread")
+        
+        self.stop_threads=True
+        del self.th
+        
+        self.periodic_callback = None
+        self.th = None
+        #self.stop_threads=False
+    
+    def blocking_task(self, id, stop):
+        while True:
+            self.periodic_callback()
+            time.sleep(.1)
+            if stop():
+                print("exit.")
+                break
+    
+    def push_data(self, data):
         
         self._x+=self.d_x
         
@@ -129,4 +170,3 @@ class JupyterLivePlot():
         # stream data
         self.cds.stream( data, self.width_d )
         push_notebook(handle=self.handle)
-        print(data)
