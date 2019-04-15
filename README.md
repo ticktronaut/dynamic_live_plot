@@ -16,10 +16,10 @@ The only class method is *push_data()*. Its purpose is to tell *BokehLivePlot* w
 Following example shows the usage of the class BokehLivePlot:
 ```python
 # import bokeh_live_plot
-from bokeh_live_plot import BokehLivePlot
+import dynamic_live_plot.bokeh_live_plot as blp
 import time
 # create BokehLivePlot object
-myplot = BokehLivePlot()
+myplot = blp.BokehLivePlot()
 # inject data for plotting
 myplot.push_d(dict(FirstPlot=dict(plotA=np.array([0.1, 0.2, 0.3]), plotb=np.array([0.2, 0.3, 0.4]))
 # do blocking computation (maybe for data acquisition)
@@ -29,25 +29,33 @@ myplot.push_d(dict("FirstPlot"=dict("plotA=np.array([0.3, 0.2, 0.1]), plotb=np.a
 ```
 ### JupyterLivePlot
 The easiest way to found out about **JupyterLivePlot** is the following
-* clone or download this repository and cd to the bokeh folder (`git clone https://github.com/ticktronaut/dynamic_live_plot.git && cd dynamic_live_plot/bokeh`)
+* clone or download this repository and cd to the bokeh folder (`git clone https://github.com/ticktronaut/dynamic_live_plot.git && cd dynamic_live_plot/notebooks`)
 * start a jupyter server in this directory (`jupyter-server`)
 * launch the [jupyter_live_plot_sample.ipynb](https://github.com/ticktronaut/dynamic_live_plot/blob/master/bokeh/jupyter_live_plot_sample.ipynb) dictionary for further details on the usage of **JupyterLivePlot**
 
-
+### Example
+Go to the examples directory:
+```console
+cd examples
+```
+Start the example script:
+```console
+python blp_sample.py
+```
 
 ## Requirements
 BokehLivePlot strongly depends on Python [Bokeh](https://bokeh.pydata.org/en/latest/), which is licensed under BSD 3-Clause.
 
-## Quick test
+## Installation
 Clone (or download, if desired) the repository:
 ```console
 git clone https://github.com/ticktronaut/dynamic_live_plot.git
 ```
-Go to the directory, that contains the code:
+Go to the directory:
 ```console
-cd bokeh
+cd dynamic_live_plot
 ```
-Launch the sample script (tested on Python 3.6):
+Install the package:
 ```console
-python blp_sample.py
+python setup.py install
 ```
