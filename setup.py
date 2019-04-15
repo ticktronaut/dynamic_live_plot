@@ -13,7 +13,7 @@ setuptools.setup(
     name="dynamic_live_plot",
     version=dynamic_live_plot.__version__,
     author=dynamic_live_plot.__author__,
-    author_email="andreas.gschossmann@oth-regensburg.de",
+    author_email="",
     description="Package for dynamic live plotting with the help of bokeh",
     long_description=readme,
     long_description_content_type="text/markdown",
