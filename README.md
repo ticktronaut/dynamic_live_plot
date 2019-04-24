@@ -28,7 +28,7 @@ time.sleep(.2)
 myplot.push_d(dict("FirstPlot"=dict("plotA=np.array([0.3, 0.2, 0.1]), plotb=np.array([0.4, 0.2, 0.3]))
 ```
 ### JupyterLivePlot
-The easiest way to found out about **JupyterLivePlot** is the following
+The easiest way to find out about **JupyterLivePlot** is the following
 * clone or download this repository and cd to the bokeh folder (`git clone https://github.com/ticktronaut/dynamic_live_plot.git && cd dynamic_live_plot/bokeh`)
 * start a jupyter server in this directory (`jupyter-server`)
 * launch the [jupyter_live_plot_sample.ipynb](https://github.com/ticktronaut/dynamic_live_plot/blob/master/bokeh/jupyter_live_plot_sample.ipynb) dictionary for further details on the usage of **JupyterLivePlot**
