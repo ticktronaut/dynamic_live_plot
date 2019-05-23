@@ -10,5 +10,5 @@ This package exports the following subpackages:
 
 __author__ = 'SappZ'
 
-version_info = (0, 0, 1)
+version_info = (0, 0, 2)
 __version__ = '%d.%d.%d' % version_info

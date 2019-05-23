@@ -60,7 +60,7 @@ class JupyterLivePlot():
         self.th = None
         self.stop_threads = False
         self.periodic_callback = None
-        self.period_milliseconds = None
+        self.period_seconds = None
         
     def contains_line(self, line_name):
         #return True
@@ -117,7 +117,7 @@ class JupyterLivePlot():
             self.remove_periodic_callback()
 
         self.periodic_callback = callback
-        self.period_milliseconds = period_milliseconds
+        self.period_seconds = period_milliseconds/1000
         
         self.stop_threads=False
         self.th = Thread(target=self.blocking_task, args=(id, lambda: self.stop_threads))
@@ -136,14 +136,23 @@ class JupyterLivePlot():
     def blocking_task(self, id, stop):
         while True:
             self.periodic_callback()
-            time.sleep(.1)
+            time.sleep(self.period_seconds)
             if stop():
                 print("exit.")
                 break
     
     def push_data(self, data):
-        
-        self._x+=self.d_x
+        data_len = len(list(data.values())[0])
+        if data_len > 1 and isinstance(self._x, np.ndarray):
+            self._x = np.linspace(self._x[-1] + self.d_x,
+                                  self._x[-1] + self.d_x * data_len,
+                                  data_len)
+        elif data_len > 1:
+            self._x = np.linspace(self._x + self.d_x,
+                                  self._x + self.d_x * data_len,
+                                  data_len)
+        else:
+            self._x += self.d_x
         
         # add lines, not seen before
         for line in data:
@@ -154,7 +163,10 @@ class JupyterLivePlot():
         # set if not in data alreadyx
         # FixMe: set length
         if not 'x' in data.keys():
-            data['x'] = np.array([self._x])
+             if isinstance(self._x, np.ndarray):
+                 data['x'] = self._x
+             else:
+                 data['x'] = np.array([self._x])
         # else just use the one inside of data
         
          # data that was present formerly and is not present in current data 
@@ -165,7 +177,7 @@ class JupyterLivePlot():
                ( np.isnan(absent_list).all() ):
                 self.del_line(absent)
             else:
-                data[absent]=np.array([np.nan])
+                data[absent]=np.array([np.nan]*data_len)
         
         # stream data
         self.cds.stream( data, self.width_d )

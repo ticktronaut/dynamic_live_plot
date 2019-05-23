@@ -116,7 +116,7 @@ class BokehLivePlot(Thread):
         @gen.coroutine
         def update(data):
             # update x
-            self._x+=self.d_x
+            self._x += self.d_x
             # update all plots
             for plt in self.d:
                 # add plot if not exists 
@@ -128,7 +128,7 @@ class BokehLivePlot(Thread):
                 # stream data
                 data=self.d[plt]
                 # FixMe preset all data with nan
-                data['x']=np.array([self._x])
+                data['x'] = np.array([self._x])
                 # data that was present formerly and is not present in current data 
                 absent_d_keys=list(set(cds[plt].data.keys()) - set(data.keys()))
                 for absent in absent_d_keys:#list(set(cds[plt].data.keys()) - set(data.keys())):#absent_d_keys:
@@ -138,7 +138,7 @@ class BokehLivePlot(Thread):
                         del_line(absent, plt)
                     else:
                         data[absent]=np.array([np.nan])
-                cds[plt].stream( self.d[plt], 100 )
+                cds[plt].stream( data, 100 )
        
         def blocking_task():
             while True:
