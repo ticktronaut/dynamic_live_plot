@@ -151,6 +151,8 @@ class JupyterLivePlot():
             self._x = np.linspace(self._x + self.d_x,
                                   self._x + self.d_x * data_len,
                                   data_len)
+        elif isinstance(self._x, np.ndarray):
+            self._x = self._x[-1]+self.d_x
         else:
             self._x += self.d_x
         
