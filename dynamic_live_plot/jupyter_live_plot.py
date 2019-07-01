@@ -5,6 +5,7 @@ from bokeh.models import ColumnDataSource
 from bokeh.plotting import figure
 from bokeh.palettes import Category20
 from bokeh.io import output_notebook, show, push_notebook
+from bokeh.models import DatetimeTickFormatter
 
 from threading import Thread
 
@@ -14,7 +15,7 @@ import time
 
 class JupyterLivePlot():
     output_notebook()
-    def __init__(self, plot_width=600, plot_height=400):
+    def __init__(self, plot_width=600, plot_height=400, timeplot = False):
         print("Create plot")
         print("- width:", plot_width, "px")
         print("- height:", plot_height, "px")
@@ -31,7 +32,14 @@ class JupyterLivePlot():
         # rendering the plot fails afterwards.
         self.cds = ColumnDataSource( data=dict(x=np.array([0.]), dummy=np.array([0.]) ) )
         #self.cds = ColumnDataSource( data=dict(x=np.array([0])) )
-        self.fig = figure(plot_width=plot_width, plot_height=plot_height)
+        if timeplot:
+            self.fig = figure(plot_width=plot_width, plot_height=plot_height, x_axis_type="datetime")
+            self.fig.xaxis.formatter = DatetimeTickFormatter(microseconds="%m/%d %H:%M:%S",
+                                                             milliseconds="%m/%d %H:%M:%S",
+                                                             seconds="%m/%d %H:%M:%S", minsec="%m/%d %H:%M:%S",
+                                                             minutes="%m/%d %H:%M:%S", hourmin="%m/%d %H:%M:%S")
+        else:
+            self.fig = figure(plot_width=plot_width, plot_height=plot_height)
         
         # note: this is just a dummy line, which will be deleted, 
         # right after self.handler is created by the show method. 
