@@ -2,7 +2,7 @@
 #coding=utf-8
 
 
-from bokeh_live_plot import BokehLivePlot
+import dynamic_live_plot.bokeh_live_plot as blp
 from random import uniform
 from tornado import gen
 
@@ -27,7 +27,7 @@ def rand_data3():
 def rand_data4():
     return dict( temperature=dict( t001=np.array([uniform(-4,23)]), t004=np.array([uniform(-1,1)]) ), pressure=dict( p001=np.array([uniform(-1,1)]), p002=np.array([uniform(4,3)]), p004=np.array([uniform(1,2)]) ), humidity=dict( h001=np.array([uniform(-1,1)]), h002=np.array([uniform(-1,1)]), h004=np.array([uniform(-2,4)]) ) )
 
-myplot = BokehLivePlot()
+myplot = blp.BokehLivePlot()
 myplot.start()
 
 delta_t=.2

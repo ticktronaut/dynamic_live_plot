@@ -5,6 +5,7 @@ from bokeh.models import ColumnDataSource
 from bokeh.plotting import figure
 from bokeh.palettes import Category20
 from bokeh.io import output_notebook, show, push_notebook
+from bokeh.models import DatetimeTickFormatter
 
 from threading import Thread
 
@@ -14,7 +15,7 @@ import time
 
 class JupyterLivePlot():
     output_notebook()
-    def __init__(self, plot_width=600, plot_height=400):
+    def __init__(self, plot_width=600, plot_height=400, timeplot = False):
         print("Create plot")
         print("- width:", plot_width, "px")
         print("- height:", plot_height, "px")
@@ -31,7 +32,14 @@ class JupyterLivePlot():
         # rendering the plot fails afterwards.
         self.cds = ColumnDataSource( data=dict(x=np.array([0.]), dummy=np.array([0.]) ) )
         #self.cds = ColumnDataSource( data=dict(x=np.array([0])) )
-        self.fig = figure(plot_width=plot_width, plot_height=plot_height)
+        if timeplot:
+            self.fig = figure(plot_width=plot_width, plot_height=plot_height, x_axis_type="datetime")
+            self.fig.xaxis.formatter = DatetimeTickFormatter(microseconds="%m/%d %H:%M:%S",
+                                                             milliseconds="%m/%d %H:%M:%S",
+                                                             seconds="%m/%d %H:%M:%S", minsec="%m/%d %H:%M:%S",
+                                                             minutes="%m/%d %H:%M:%S", hourmin="%m/%d %H:%M:%S")
+        else:
+            self.fig = figure(plot_width=plot_width, plot_height=plot_height)
         
         # note: this is just a dummy line, which will be deleted, 
         # right after self.handler is created by the show method. 
@@ -60,7 +68,7 @@ class JupyterLivePlot():
         self.th = None
         self.stop_threads = False
         self.periodic_callback = None
-        self.period_milliseconds = None
+        self.period_seconds = None
         
     def contains_line(self, line_name):
         #return True
@@ -117,7 +125,7 @@ class JupyterLivePlot():
             self.remove_periodic_callback()
 
         self.periodic_callback = callback
-        self.period_milliseconds = period_milliseconds
+        self.period_seconds = period_milliseconds/1000
         
         self.stop_threads=False
         self.th = Thread(target=self.blocking_task, args=(id, lambda: self.stop_threads))
@@ -136,14 +144,25 @@ class JupyterLivePlot():
     def blocking_task(self, id, stop):
         while True:
             self.periodic_callback()
-            time.sleep(.1)
+            time.sleep(self.period_seconds)
             if stop():
                 print("exit.")
                 break
     
     def push_data(self, data):
-        
-        self._x+=self.d_x
+        data_len = len(list(data.values())[0])
+        if data_len > 1 and isinstance(self._x, np.ndarray):
+            self._x = np.linspace(self._x[-1] + self.d_x,
+                                  self._x[-1] + self.d_x * data_len,
+                                  data_len)
+        elif data_len > 1:
+            self._x = np.linspace(self._x + self.d_x,
+                                  self._x + self.d_x * data_len,
+                                  data_len)
+        elif isinstance(self._x, np.ndarray):
+            self._x = self._x[-1]+self.d_x
+        else:
+            self._x += self.d_x
         
         # add lines, not seen before
         for line in data:
@@ -154,7 +173,10 @@ class JupyterLivePlot():
         # set if not in data alreadyx
         # FixMe: set length
         if not 'x' in data.keys():
-            data['x'] = np.array([self._x])
+             if isinstance(self._x, np.ndarray):
+                 data['x'] = self._x
+             else:
+                 data['x'] = np.array([self._x])
         # else just use the one inside of data
         
          # data that was present formerly and is not present in current data 
@@ -165,7 +187,7 @@ class JupyterLivePlot():
                ( np.isnan(absent_list).all() ):
                 self.del_line(absent)
             else:
-                data[absent]=np.array([np.nan])
+                data[absent]=np.array([np.nan]*data_len)
         
         # stream data
         self.cds.stream( data, self.width_d )
